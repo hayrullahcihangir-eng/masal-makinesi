@@ -9,7 +9,11 @@ import os
 from datetime import datetime
 
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "masal_arsiv.db")
+# Vercel ortamını kontrol et (Vercel'de disk salt okunur olduğu için veritabanını /tmp altında oluşturmalıyız)
+if os.environ.get("VERCEL"):
+    DB_PATH = "/tmp/masal_arsiv.db"
+else:
+    DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "masal_arsiv.db")
 
 
 def get_connection():
