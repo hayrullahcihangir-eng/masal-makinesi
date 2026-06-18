@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Masal Makinesi - Sınıfa özel sesli masallar. Yapay zeka ile öğrencilerin kahraman olduğu eğitici masallar oluşturun.">
+    <title>✨ Masal Makinesi – Sınıfa Özel Sesli Masallar</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪄</text></svg>">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Stars Background Canvas -->
+<canvas id="stars-canvas"></canvas>
+
+<div class="app-container">
+
+    <!-- ═══ Hero ═══ -->
+    <header class="hero">
+        <span class="hero-icon">🪄</span>
+        <h1>Masal Makinesi</h1>
+        <p class="hero-subtitle">Sınıfa özel büyülü sesli masallar ✨</p>
+    </header>
+
+    <!-- ═══ Navigation ═══ -->
+    <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab active" data-tab="create" role="tab" id="tab-create">✨ Masal Oluştur</button>
+        <button class="nav-tab" data-tab="archive" role="tab" id="tab-archive">📚 Arşiv</button>
+        <button class="nav-tab" data-tab="nicknames" role="tab" id="tab-nicknames">👦 Adlar</button>
+        <button class="nav-tab" data-tab="settings" role="tab" id="tab-settings">⚙️ Ayarlar</button>
+    </nav>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- SECTION: Masal Oluştur             -->
+    <!-- ═══════════════════════════════════ -->
+    <section class="section active" id="section-create">
+
+        <!-- Konu Seçimi -->
+        <div class="glass-card">
+            <h2 class="section-title"><span class="icon">📚</span> Konu Seç</h2>
+            <div class="topic-grid" id="topic-grid">
+                <!-- JS ile doldurulur -->
+            </div>
+        </div>
+
+        <!-- Yaş Grubu -->
+        <div class="glass-card">
+            <h2 class="section-title"><span class="icon">🎯</span> Yaş Grubu</h2>
+            <div class="select-wrapper">
+                <select class="custom-select" id="age-group-select">
+                    <!-- JS ile doldurulur -->
+                </select>
+            </div>
+        </div>
+
+        <!-- Takma Adlar -->
+        <div class="glass-card">
+            <h2 class="section-title"><span class="icon">👦</span> Kahramanlar</h2>
+            <div class="tag-input-container" id="tag-input-container">
+                <input type="text"
+                       class="tag-input"
+                       id="tag-input"
+                       placeholder="Takma ad yazıp Enter'a basın..."
+                       autocomplete="off"
+                       maxlength="30">
+            </div>
+            <p class="tag-hint">💡 Enter veya virgül ile ad ekleyin. Masalda kahraman olacaklar!</p>
+            <div class="nickname-pool" id="nickname-pool">
+                <!-- Kayıtlı takma adlar JS ile yüklenir -->
+            </div>
+        </div>
+
+        <!-- Oluştur Butonu -->
+        <button class="btn-generate" id="btn-generate" disabled>
+            <span>✨ Masalı Oluştur ✨</span>
+        </button>
+
+        <!-- Loading -->
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="glass-card" style="border-color: rgba(167,139,250,0.3);">
+                <span class="magic-wand">🪄</span>
+                <p class="loading-text">Büyülü masal hazırlanıyor<span class="loading-dots"></span></p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Kahramanlarınız macerasına başlıyor...</p>
+            </div>
+        </div>
+
+        <!-- Story Display -->
+        <div class="story-container" id="story-container">
+
+            <div class="glass-card">
+                <!-- Story Header -->
+                <div class="story-header">
+                    <h2 class="story-title" id="story-title"></h2>
+                    <div class="story-meta" id="story-meta"></div>
+                </div>
+
+                <!-- Story Text -->
+                <div class="story-text-area">
+                    <div class="story-text" id="story-text"></div>
+                </div>
+
+                <!-- TTS Controls -->
+                <div class="tts-controls">
+                    <button class="tts-btn tts-btn-play" id="btn-tts-play" title="Oku / Devam Et">▶</button>
+                    <button class="tts-btn tts-btn-pause" id="btn-tts-pause" title="Duraklat">⏸</button>
+                    <button class="tts-btn tts-btn-stop" id="btn-tts-stop" title="Durdur">⏹</button>
+                    <div class="tts-speed">
+                        <span>🐢</span>
+                        <input type="range" class="speed-slider" id="speed-slider" min="0.5" max="2" step="0.1" value="0.9">
+                        <span>🐇</span>
+                        <span class="speed-value" id="speed-value">0.9x</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="story-actions">
+                    <button class="btn-action btn-save" id="btn-save-story">
+                        💾 Arşive Kaydet
+                    </button>
+                    <button class="btn-action" id="btn-new-story">
+                        🔄 Yeni Masal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Questions -->
+            <div class="glass-card questions-container" id="questions-container">
+                <h2 class="section-title"><span class="icon">❓</span> Anlama Soruları</h2>
+                <div id="questions-list">
+                    <!-- JS ile doldurulur -->
+                </div>
+                <div class="score-display" id="score-display">
+                    <span class="score-emoji" id="score-emoji"></span>
+                    <p class="score-text" id="score-text"></p>
+                    <p class="score-detail" id="score-detail"></p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- SECTION: Arşiv                     -->
+    <!-- ═══════════════════════════════════ -->
+    <section class="section" id="section-archive">
+        <div class="glass-card">
+            <h2 class="section-title"><span class="icon">📚</span> Sınıf Masal Kitabı</h2>
+            <div id="archive-list-container">
+                <div class="archive-empty" id="archive-empty">
+                    <span class="archive-empty-icon">📖</span>
+                    <p>Henüz arşivlenmiş masal yok.</p>
+                    <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-muted);">Oluşturduğunuz masalları "Arşive Kaydet" ile buraya ekleyebilirsiniz.</p>
+                </div>
+                <div class="archive-list" id="archive-list">
+                    <!-- JS ile doldurulur -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- SECTION: Takma Ad Havuzu           -->
+    <!-- ═══════════════════════════════════ -->
+    <section class="section" id="section-nicknames">
+        <div class="glass-card">
+            <h2 class="section-title"><span class="icon">👦</span> Takma Ad Havuzu</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px;">
+                Sınıfınızdaki öğrencilerin takma adlarını buraya ekleyin. Masal oluştururken bu havuzdan hızlıca seçim yapabilirsiniz.
+            </p>
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                <input type="text"
+                       class="tag-input"
+                       id="pool-nickname-input"
+                       placeholder="Yeni takma ad..."
+                       autocomplete="off"
+                       maxlength="30"
+                       style="flex:1; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 10px 16px;">
+                <button class="btn-action" id="btn-add-pool-nickname" style="min-width: auto; flex-shrink:0;">
+                    ➕ Ekle
+                </button>
+            </div>
+            <div id="pool-nickname-list" class="nickname-pool" style="gap: 8px;">
+                <!-- JS ile doldurulur -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Section: Ayarlar ═══ -->
+    <section class="section" id="section-settings">
+        <div class="glass-card">
+            <h2 class="section-title"><span class="icon">⚙️</span> Gemini API Ayarı</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">
+                Gemini API anahtarınızı girerek masal üretimini kendi API kotanız üzerinden yapabilirsiniz. Anahtarınız tarayıcınızın yerel depolamasında (localStorage) güvenli bir şekilde saklanır ve sadece masal üretilirken sunucuya iletilir.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label for="api-key-input" style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;">Gemini API Anahtarı (API Key)</label>
+                <input type="password"
+                       class="tag-input"
+                       id="api-key-input"
+                       placeholder="AIzaSy..."
+                       autocomplete="off"
+                       style="width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 10px 16px; margin-bottom: 8px; font-family: sans-serif;">
+                <p class="tag-hint">💡 Anahtarınız sunucudaki dosyalarda veya veritabanında saklanmaz.</p>
+                <button class="btn-action" id="btn-save-api-key" style="margin-top: 10px; width: 100%; justify-content: center; font-weight: bold; padding: 12px;">
+                    💾 Anahtarı Kaydet
+                </button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ═══ Modal (Arşivden masal okuma) ═══ -->
+<div class="modal-overlay" id="story-modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close">✕</button>
+        <div class="story-header" style="margin-top: 8px;">
+            <h2 class="story-title" id="modal-story-title"></h2>
+            <div class="story-meta" id="modal-story-meta"></div>
+        </div>
+        <div class="story-text-area" style="margin-top: 20px;">
+            <div class="story-text" id="modal-story-text"></div>
+        </div>
+        <div class="tts-controls" style="margin-top: 16px;">
+            <button class="tts-btn tts-btn-play" id="modal-btn-tts-play" title="Oku">▶</button>
+            <button class="tts-btn tts-btn-pause" id="modal-btn-tts-pause" title="Duraklat">⏸</button>
+            <button class="tts-btn tts-btn-stop" id="modal-btn-tts-stop" title="Durdur">⏹</button>
+        </div>
+        <div class="questions-container" id="modal-questions-container" style="margin-top: 20px;">
+            <h2 class="section-title"><span class="icon">❓</span> Anlama Soruları</h2>
+            <div id="modal-questions-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
