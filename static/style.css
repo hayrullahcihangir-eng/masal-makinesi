@@ -113,12 +113,14 @@ body::before {
     position: relative;
 }
 
-.hero-icon {
-    font-size: 4rem;
+.hero-icon-img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
     display: block;
-    margin-bottom: 12px;
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px var(--gold-glow));
+    margin: 0 auto 12px;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.45));
 }
 
 .hero h1 {
