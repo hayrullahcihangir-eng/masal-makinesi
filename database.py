@@ -20,7 +20,12 @@ def get_connection():
     """Veritabanı bağlantısı oluşturur."""
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL")
+    # Vercel'de (veya WAL desteklemeyen ortamlarda) journal_mode=WAL hata verebilir, yerel dışında kapatıyoruz
+    if not os.environ.get("VERCEL"):
+        try:
+            conn.execute("PRAGMA journal_mode=WAL")
+        except sqlite3.OperationalError:
+            pass
     conn.execute("PRAGMA foreign_keys=ON")
     return conn
 
